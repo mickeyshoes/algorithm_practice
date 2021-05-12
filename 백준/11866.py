@@ -1,13 +1,17 @@
+from collections import deque
 import sys
 
 N, K = map(int, sys.stdin.readline().rstrip('\n').split())
 
-input_list =[i for i in range(1,N+1)]
+joseputh = deque()
 
-while True:
+for i in range(1,N+1):
+    joseputh.append(i)
 
-    if len(input_list) == 0:
-        break
-
+print('<', end='')
+for i in range(len(joseputh)):
+    if len(joseputh) == 1:
+        print(joseputh.popleft(), end='>')
     else:
-        
+        joseputh.rotate(-K+1)
+        print(joseputh.popleft(), end=', ')

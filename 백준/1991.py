@@ -13,12 +13,22 @@ def preorder(node):
         preorder(tree[node][0])
         preorder(tree[node][1])
 
+def adv_preorder(node):
+    if node == '.':
+        return ''
+    return node + adv_preorder(tree[node][0]) + adv_preorder(tree[node][1])
+
 def inorder(node):
     if tree[node][0] != '.':
         inorder(tree[node][0])
     print(node, end='')
     if tree[node][1] != '.':
         inorder(tree[node][1])
+
+def adv_inorder(node):
+    if node == '.':
+        return ''
+    return adv_inorder(tree[node][0]) + node + adv_inorder(tree[node][1])
 
 def postorder(node):
     if tree[node][0] != '.':
@@ -27,9 +37,18 @@ def postorder(node):
         postorder(tree[node][1])
     print(node, end='')
 
+def adv_postorder(node):
+    if node == '.':
+        return ''
+    return adv_postorder(tree[node][0]) + adv_postorder(tree[node][1]) + node
 
 preorder('A')
 print()
 inorder('A')
 print()
 postorder('A')
+
+print()
+print(adv_preorder('A'))
+print(adv_inorder('A'))
+print(adv_postorder('A'))

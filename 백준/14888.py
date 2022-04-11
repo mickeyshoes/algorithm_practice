@@ -9,7 +9,8 @@ ops = ['+']*ops[0] + ['-']*ops[1] + ['*']*ops[2] + ['/']*ops[3]
 stack =[]
 visited = [False] * (N-1)
 #max, min
-answer = [0,reduce(lambda x,y : x*y, items)*2]
+init = 1000000000
+answer = [-init, init]
 def DFS()->None:
 
     if len(stack) == (N-1):
@@ -18,12 +19,13 @@ def DFS()->None:
         answer[1] = min(answer[1], result)
         return
 
+    prev_ops = ' '
     for i in range(len(ops)):
-        if not visited[i]:
+        if not visited[i] and prev_ops != ops[i]:
             stack.append(ops[i])
             visited[i] = True
             DFS()
-            stack.pop()
+            prev_ops = stack.pop()
             visited[i] = False
 
 def operation_result(ops:str)->int:
@@ -51,7 +53,6 @@ def calculate_ops(num1:int, num2:int, ops:str)->int:
         print(num1, num2, ops)
     return result
 
-print(ops)
 DFS()
 for i in range(len(answer)):
     print(answer[i])

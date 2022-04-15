@@ -1,17 +1,21 @@
+from re import L
 import sys
 input= sys.stdin.readline
 N = int(input().rstrip('\n'))
-temp=[0]
 
-def DFS(stack:list, limit:int, idx:int)->None:
+items = list(range(10))
+stack =[]
 
+def DFS(idx:int, limit:int):
     if len(stack) == limit:
         print(*stack)
         return
 
-    for i in range(idx,-1,-1):
-        stack.append(i)
-        DFS(stack, limit, i)
+    for i in range(idx):
+        stack.append(items[i])
+        DFS(i, limit)
         stack.pop()
 
-DFS([], 1, 0)
+
+for i in range(3):
+    DFS(,i)

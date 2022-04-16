@@ -6,10 +6,10 @@ items = list(map(int, input().rstrip('\n').split()))
 items.sort()
 X = int(input().rstrip('\n'))
 start = 0
-end = len(items) - 1
+end = N - 1
 cnt = 0
 
-while start <= end:
+while start < end:
     value = items[start] + items[end]
     if value > X:
         end -=1

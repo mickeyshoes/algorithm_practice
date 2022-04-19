@@ -20,6 +20,6 @@ while True:
             continue
 
     temp_sum -= ary[left]
-    left+=1    
+    left+=1
 
 print(ans) if ans != 100001 else print(0)

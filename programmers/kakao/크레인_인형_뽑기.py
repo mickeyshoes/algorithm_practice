@@ -13,4 +13,4 @@ def solution(board, moves):
                 board[row][col] = 0
                 break
     print(stack)
-    return answer
+    return answer * 2

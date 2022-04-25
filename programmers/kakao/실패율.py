@@ -1,11 +1,17 @@
+from collections import Counter
 def solution(N, stages):
-    answer = []
-    failure = {i:[0,0] for i in range(1,N+1)}
+    stage_counts = Counter(stages)
+    failure = {i:0 for i in range(1,N+1)}
+    users = len(stages)
     
-    for user in stages:
-        if user != N+1:
-            failure[user][0] +=1
-        for clear in range(1, user):
-            failure[clear][1] +=1
-    print(sorted(failure.items(), key=lambda a,b: b[0]/b[1]))
-    return answer
+    for i in range(1, N+1):
+        now = stage_counts[i]
+        stage_failure = 0
+                
+        if users != 0 and now != 0:
+            stage_failure = now/users
+            users -= now
+        
+        failure[i] = stage_failure
+        
+    return [k for k,v in sorted(failure.items(), key= lambda x: x[1], reverse=True)]

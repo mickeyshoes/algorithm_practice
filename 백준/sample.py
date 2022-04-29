@@ -1,25 +1,15 @@
 import sys
 input = sys.stdin.readline
 
-N,S = map(int, input().rstrip('\n').split())
-ary = list(map(int, input().rstrip('\n').split()))
-ans = 100001
-left, right = 0,0
-temp_sum = ary[left]
+n, m = map(int, input().split())
+data = [list(map(int, input().split())) for _ in range(n)]
+sum_data = [[0] * (n+1) for i in range(n+1)]
 
-while True:
-    if left == N:
-        break
+for i in range(1, n+1):
+    for j in range(1, n+1):
+        sum_data[i][j] = sum_data[i][j-1] + sum_data[i-1][j] - sum_data[i-1][j-1] + data[i-1][j-1]
 
-    if temp_sum >=S:
-        ans = min(ans, right-left+1)
-    else:
-        if right < N-1:
-            right+=1
-            temp_sum += ary[right]
-            continue
+for _ in range(m):
+    x1, y1, x2, y2 = map(int, input().split())
 
-    temp_sum -= ary[left]
-    left+=1    
-
-print(ans) if ans != 100001 else print(0)
+    print(sum_data[x2][y2] - sum_data[x1-1][y2] - sum_data[x2][y1-1] + sum_data[x1-1][y1-1])

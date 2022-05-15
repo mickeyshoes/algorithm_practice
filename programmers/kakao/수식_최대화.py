@@ -25,7 +25,7 @@ def operation_result(num1:int, num2:int, op:str)->int:
         
 def solution(expression):
     answer = 0
-    operations = list()
+    operations = set()
     exp_to_list = list()
     temp = ''
     # 숫자와 연산 문자 추출 및 중복 제거
@@ -35,10 +35,10 @@ def solution(expression):
         else:
             exp_to_list.append(int(temp))
             exp_to_list.append(i)
-            operations.append(i)
+            operations.add(i)
             temp = ''
     exp_to_list.append(int(temp))
-    operations = list(set(operations))
+    operations = list(operations)
     
     for ops in permutations(operations, len(operations)):
         # 계산을 위해 임시로 참조할 원본 리스트 복사

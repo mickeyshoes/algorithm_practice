@@ -1,53 +1,49 @@
 from collections import defaultdict
-def lower_bound(score_list:list, point:int)->set:
-    start, mid, end = 0, 0, len(score_list)
+from itertools import combinations
+
+def lower_bound(score_list:list, score_len:int, point:int)->int:
+    '''
+    길이를 한번만 측정하게 해서 시간을 줄였다.
+    전체 배열 길이에서 lower bound 해서 얻어낸 end 값을 빼주면 최종 길이다.
+    '''
+    start, end = 0, score_len
     
-    while start <=end:
+    while start <end:
         mid = (start+end)//2
-        if score_list[mid][0] < point:
+        if score_list[mid] < point:
             start = mid +1
         else:
             end = mid
     
-    target_set = set(score_list[i][1] for i in range(mid,end))
-    return target_set
+    return score_len - end
         
 def solution(info, query):
     answer = []
-    # string info -> dict(set)으로
-    info_dict = defaultdict(set)
-    score = [0] * len(info)
-    for idx, target in enumerate(info):
-        lan, job, car, food, point = target.split()
-        info_dict[lan].add(idx)
-        info_dict[job].add(idx)
-        info_dict[car].add(idx)
-        info_dict[food].add(idx)
-        score[idx] = tuple(int(point), idx)
-    score.sort(key=lambda x:x[0])
+    info_dict = defaultdict(list)
+    '''
+    처음에 info 에 담긴 모든 정보를 set 으로 담아서 교집합을 찾는 식으로 진행하였는데 O(len(data))
+    a,b, score_list = set(), set(), list()
+    그렇게 되면 (len(a) + len(b))*4 + len(score_list(:lower_bound_idx))의 시간이 걸리게 된다.
+    미리 info 의 조합을 짜서 dict 에 추가하면, 2^4 * len(data) + O(log n)의 시간에 탐색이 가능해진다.
+    '''
+    for i in info:
+        lan, job, car, food, point = i.split()
+        for j in range(5):
+            for comb in combinations([lan,job,car,food],j):
+                info_dict[''.join(comb)].append(int(point))
+    
+    for v in info_dict.values():
+        v.sort()
         
     for q in query:
-        stack = []
-        all_pass = set([i for i in range(len(info))])
-        result = set([i for i in range(len(info))])
-        temp = ''
+        key, temp = '', ''
         for w in q:
-            if w !=' ':
+            if w != ' ':
                 temp +=w
             else:
-                if temp != "and":
-                    stack.append(temp)
-                temp = ""
-        stack.append(temp)
-        
-        for i in stack:
-            if i == '-':
-                result = result & all_pass
-            elif i.isdigit():
-                target_score = int(i)
-                result = result & lower_bound(score, target_score)
-            else:
-                result = result & info_dict[i]
-        answer.append(len(result))
+                if temp != 'and' and temp !='-':
+                    key+=temp
+                temp =''
+        answer.append(lower_bound(info_dict[key], len(info_dict[key]), int(temp)))
         
     return answer

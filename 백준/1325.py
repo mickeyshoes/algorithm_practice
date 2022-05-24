@@ -1,26 +1,37 @@
 import sys
-from collections import deque
+from collections import defaultdict,deque
 input = sys.stdin.readline
 
-N = int(input().rstrip('\n'))
-ary = list(map(int, input().rstrip('\n').split()))
-A,B = map(int, input().rstrip('\n').split())
+N,M = map(int, input().rstrip('\n').split())
+d = defaultdict(list)
 
-visited = [False] * N
+for _ in range(M):
+    a,b = map(int, input().rstrip('\n').split())
+    d[b].append(a)
 
-def BFS(start:int, end:int):
-    q= deque([(0,start)])
-
+def bfs(start:int, d:dict, m:int):
+    q = deque([])
+    visited = [False] * m
+    q.append(start)
+    visited[start-1] = True
+    count = 0
     while q:
-        depth, node = q.popleft()
-        visited[node] = True
-        
-        for i in range(N):
-            if not visited[i] and abs(node-i) % ary[node] == 0:
-                q.append((depth+1, i))
-                if i == end:
-                    return depth+1
+        node = q.popleft()
+        count +=1
+        for n in d[node]:
+            if not visited[n-1]:
+                visited[n-1] = True
+                q.append(n)
+    return count
 
-
-answer = BFS(A-1, B-1)
-print(answer) if answer else print(-1)
+answer = []
+temp = 0
+for i in range(1,N+1):
+    if d[i]:
+        a = bfs(i,d,N)
+        if temp <= a:
+            if temp < a:
+                answer = []
+                temp = a
+            answer.append(i)
+print(*answer)

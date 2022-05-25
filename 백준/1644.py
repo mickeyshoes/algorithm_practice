@@ -9,7 +9,14 @@ def is_prime(number:int)->bool:
             return False
     return True
 
-ary = [i for i in range(2,N+1) if is_prime(i)]
+ary = list()
+
+if N >2:
+    ary.append(2)
+    ary.extend([i for i in range(3,N+1,2) if is_prime(i)])
+else:
+    ary = [i for i in range(2,N+1) if is_prime(i)]
+    
 cnt, end, prefix_sum = 0,0,0
 lim = len(ary)
 for i in range(lim):

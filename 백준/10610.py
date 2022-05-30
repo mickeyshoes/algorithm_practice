@@ -1,13 +1,18 @@
 import sys
-from itertools import permutations
 input = sys.stdin.readline
 
 N = input().rstrip('\n')
-temp = -1
-for p in permutations(N,len(N)):
-    target = ''.join(p)
 
-    if int(target) % 30 ==0:
-        temp = max(temp, int(target))
+temp = 0
+check_0 = False
+answer = []
+for i in str(N):
+    temp += int(i)
+    answer.append(i)
+    if i == '0':
+        check_0 = True
 
-print(temp)
+if temp % 3 == 0 and check_0:
+    print(''.join(sorted(answer, reverse=True)))
+else:
+    print(-1)

@@ -6,24 +6,15 @@ N = int(input().rstrip('\n'))
 # 1. define table
 dp = defaultdict(list)
 answer = []
-# 2. init table
-def is_decending(num:str)->bool:
-    prev_value = 10
-    for i in range(len(num)):
-        target = int(num[i])
-        if target >= prev_value:
-            return False
-        prev_value = target
-    return True
 
-for i in range(100):
+# 2. init table
+for i in range(10):
     target = str(i)
-    if is_decending(target):
-        dp[len(target)].append(target)
-        answer.append(i)
+    dp[1].append(target)
+    answer.append(target)
 
 # 3. fill table
-for i in range(3,10):
+for i in range(2,10):
     temp = []
     for j in range(i-1,10):
         for item in dp[i-1]:

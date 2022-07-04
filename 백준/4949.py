@@ -10,10 +10,9 @@ while True:
         if i in ['(', '[']:
             stack.append(i)
         elif i in [')', ']']:
-            if not stack:
-                stack.append(i)
-                break
-            if (i == ')' and stack[-1] == '(') or (i == ']' and stack[-1]=='['):
+            if stack and ((i == ')' and stack[-1] == '(') or (i == ']' and stack[-1]=='[')):
                 stack.pop()
+            else:
+                stack.append(i)
 
     print('no') if stack else print('yes')

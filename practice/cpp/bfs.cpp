@@ -59,7 +59,7 @@ int main(int argc, char** argv)
     vector< vector<int> > ary(N,vector<int>(N,0));
 
     int max_value = 0;
-    int answer = 0;
+    int answer = 1;
     //define array
     for (int i=0; i<N; i++){
         for (int j=0; j<N; j++){

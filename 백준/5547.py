@@ -47,6 +47,7 @@ for i in range(H):
                 tx,ty = move(i,j,k)
                 if is_range(tx,ty) and building_map[tx][ty] ==0:
                     cnt +=1
+                    #맵의 상하좌우 체크해서 값  더하기해야함
                 if not is_range(tx,ty):
                     cnt +=1
             answer += cnt

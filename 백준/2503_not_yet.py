@@ -3,6 +3,10 @@ from itertools import combinations
 input = sys.stdin.readline
 N = int(input())
 visited = [False] * 10
+case = [
+    [[1,0,0], [0,1,0], [0,0,1]],
+    [[1,1,0], [1,0,1], [0,1,1]],
+]
 
 for _ in range(N):
     number, strike, ball = input().split()
